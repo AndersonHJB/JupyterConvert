@@ -50,6 +50,22 @@ h1 {
     border-radius: 4px;
 }
 
+.markdown-cell {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 4px;
+}
+
+.code-cell {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #272822;
+    color: #f8f8f2;
+    border-radius: 4px;
+    font-family: "Courier New", Courier, monospace;
+}
+
 .right-panel {
     background-color: #272822;
     color: #f8f8f2;
@@ -63,21 +79,6 @@ pre {
     line-height: 1.5;
     font-family: "Courier New", Courier, monospace;
     position: relative;
-}
-
-pre code {
-    counter-reset: line;
-    display: block;
-}
-
-pre code::before {
-    content: counter(line);
-    counter-increment: line;
-    position: absolute;
-    left: 0;
-    width: 30px;
-    text-align: right;
-    color: #999;
 }
 
 .code-header {
@@ -100,4 +101,19 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+
+#copy-success {
+    position: absolute;
+    top: -25px;
+    right: 100px;
+    background-color: green;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.hidden {
+    display: none;
 }

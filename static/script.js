@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const notebookRender = document.getElementById("notebook-render");
     const pythonContent = document.getElementById("python-content");
     const copyCodeButton = document.getElementById("copy-code");
+    const copySuccess = document.getElementById("copy-success");
     const downloadPythonButton = document.getElementById("download-python");
 
     uploadInput.addEventListener("change", async (event) => {
@@ -21,24 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const result = await response.json();
 
             if (response.ok) {
-                // Render Notebook content
-                notebookRender.innerHTML = result.notebook.cells
-                    .map((cell) => {
-                        if (cell.cell_type === "markdown") {
-                            return `<div class="markdown">${cell.source.join("")}</div>`;
-                        } else if (cell.cell_type === "code") {
-                            return `<pre><code>${cell.source.join("")}</code></pre>`;
-                        }
-                    })
-                    .join("");
+                notebookRender.innerHTML = result.notebook_html;
+                pythonContent.textContent = result.python;
 
-                // Render Python content with line numbers
-                pythonContent.innerHTML = result.python
-                    .split("\n")
-                    .map((line, i) => `<span>${line}</span>`)
-                    .join("\n");
-
-                // Enable download button
                 downloadPythonButton.addEventListener("click", () => {
                     const blob = new Blob([result.python], { type: "text/plain" });
                     const url = URL.createObjectURL(blob);
@@ -58,7 +44,10 @@ document.addEventListener("DOMContentLoaded", () => {
     copyCodeButton.addEventListener("click", () => {
         const code = pythonContent.textContent;
         navigator.clipboard.writeText(code).then(() => {
-            alert("代码已复制到剪贴板！");
+            copySuccess.classList.remove("hidden");
+            setTimeout(() => {
+                copySuccess.classList.add("hidden");
+            }, 1500);
         });
     });
 });
