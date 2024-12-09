@@ -4,9 +4,7 @@ import json
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "uploads"
-CONVERTED_FOLDER = "converted"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-os.makedirs(CONVERTED_FOLDER, exist_ok=True)
 
 
 def convert_notebook_to_script(notebook_content):
@@ -43,7 +41,7 @@ def index():
 
                 python_script = convert_notebook_to_script(notebook_content)
                 return jsonify({
-                    "notebook": json.dumps(notebook_content, indent=4, ensure_ascii=False),
+                    "notebook": notebook_content,
                     "python": python_script,
                 })
             except (ValueError, json.JSONDecodeError) as e:

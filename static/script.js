@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const uploadInput = document.getElementById("upload-notebook");
-    const notebookContent = document.getElementById("notebook-content");
+    const notebookRender = document.getElementById("notebook-render");
     const pythonContent = document.getElementById("python-content");
     const copyCodeButton = document.getElementById("copy-code");
     const downloadPythonButton = document.getElementById("download-python");
@@ -21,8 +21,22 @@ document.addEventListener("DOMContentLoaded", () => {
             const result = await response.json();
 
             if (response.ok) {
-                notebookContent.value = result.notebook;
-                pythonContent.textContent = result.python;
+                // Render Notebook content
+                notebookRender.innerHTML = result.notebook.cells
+                    .map((cell) => {
+                        if (cell.cell_type === "markdown") {
+                            return `<div class="markdown">${cell.source.join("")}</div>`;
+                        } else if (cell.cell_type === "code") {
+                            return `<pre><code>${cell.source.join("")}</code></pre>`;
+                        }
+                    })
+                    .join("");
+
+                // Render Python content with line numbers
+                pythonContent.innerHTML = result.python
+                    .split("\n")
+                    .map((line, i) => `<span>${line}</span>`)
+                    .join("\n");
 
                 // Enable download button
                 downloadPythonButton.addEventListener("click", () => {
@@ -42,7 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     copyCodeButton.addEventListener("click", () => {
-        navigator.clipboard.writeText(pythonContent.textContent).then(() => {
+        const code = pythonContent.textContent;
+        navigator.clipboard.writeText(code).then(() => {
             alert("代码已复制到剪贴板！");
         });
     });
