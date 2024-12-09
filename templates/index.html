@@ -9,15 +9,20 @@
 <body>
     <div class="container">
         <h1>Jupyter Notebook 转 Python 脚本</h1>
-        <form id="upload-form" method="post" enctype="multipart/form-data">
-            <label for="notebook">上传或拖拽 Jupyter Notebook 文件:</label>
-            <input type="file" id="notebook" name="notebook" accept=".ipynb">
-            <button type="submit">转换并下载</button>
-        </form>
-        <div id="code-container" style="display: none;">
-            <h2>转换后的代码：</h2>
-            <pre id="code-block"></pre>
-            <button id="copy-button">复制代码</button>
+        <div class="main-content">
+            <div class="left-panel">
+                <h2>上传的 Notebook 内容</h2>
+                <textarea id="notebook-content" readonly></textarea>
+                <input type="file" id="upload-notebook" accept=".ipynb">
+            </div>
+            <div class="right-panel">
+                <h2>转换后的 Python 脚本</h2>
+                <div class="code-header">
+                    <button id="copy-code">复制代码</button>
+                    <button id="download-python">下载 Python 文件</button>
+                </div>
+                <pre id="python-content"></pre>
+            </div>
         </div>
     </div>
     <script src="/static/script.js"></script>
