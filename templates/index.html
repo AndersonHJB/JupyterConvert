@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jupyter 转 Python 脚本</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Jupyter Notebook 转 Python 脚本</h1>
+        <form id="upload-form" method="post" enctype="multipart/form-data">
+            <label for="notebook">上传或拖拽 Jupyter Notebook 文件:</label>
+            <input type="file" id="notebook" name="notebook" accept=".ipynb">
+            <button type="submit">转换并下载</button>
+        </form>
+        <div id="code-container" style="display: none;">
+            <h2>转换后的代码：</h2>
+            <pre id="code-block"></pre>
+            <button id="copy-button">复制代码</button>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
